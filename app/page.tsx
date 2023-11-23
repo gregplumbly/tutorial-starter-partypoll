@@ -12,7 +12,8 @@ export default function Home() {
   async function createPoll(formData: FormData) {
     "use server";
 
-    const title = formData.get("title")?.toString() ?? "Anonymous poll";
+    const title = formData.get("title")?.toString() ?? "All time premiership goals";
+    const targetNumber = formData.get("targetNumber") ?? 23;
     const options: string[] = [];
 
     for (const [key, value] of formData.entries()) {
@@ -24,10 +25,18 @@ export default function Home() {
     const id = randomId();
     const poll: Poll = {
       title,
+      targetNumber,
       options,
     };
 
     // 🎈 TODO: send a POST request to a PartyKit room
+    await fetch(`${PARTYKIT_URL}/party/${id}`, {
+      method: "POST",
+      body: JSON.stringify(poll),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     redirect(`/${id}`);
   }

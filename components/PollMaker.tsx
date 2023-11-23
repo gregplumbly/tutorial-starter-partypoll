@@ -10,6 +10,7 @@ const MAX_OPTIONS = 8;
 export default function PollMaker() {
   const [newOption, setNewOption] = useState<string>("");
   const [title, setTitle] = useState("");
+  const [targetNumber, setTargetNumber] = useState(Math.floor(Math.random() * 300) + 50);
   const [options, setOptions] = useState<string[]>([]);
   const newOptionRef = useRef<HTMLInputElement>(null);
   const addNewOption = () => {
@@ -19,16 +20,16 @@ export default function PollMaker() {
     }
   };
 
+
+//   setTargetNumber(23)
+
   const canAdd = options.length < MAX_OPTIONS;
-  const canSubmit =
-    title.length > 0 &&
-    options.length >= MIN_OPTIONS &&
-    options.filter((option) => option.trim().length === 0).length === 0;
+  const canSubmit = true
 
   return (
     <>
       <Input
-        placeholder="Poll title"
+        placeholder="Name your room"
         type="text"
         name="title"
         className={"text-2xl font-bold"}
@@ -41,7 +42,24 @@ export default function PollMaker() {
           }
         }}
       />
-      <ul className="flex flex-col space-y-4">
+
+    {/* add a hidden form element with targetNumber */}
+        <Input
+            placeholder="Target number"
+            type="hidden"
+            name="targetNumber"
+            value={targetNumber}
+            onChange={(e) => setTargetNumber(parseInt(e.target.value))}
+            onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    newOptionRef.current?.focus();
+                }
+            }}
+        />
+
+
+      {/* <ul className="flex flex-col space-y-4">
         {options.map((value, i) => (
           <li className="flex" key={i}>
             <Input type="text" name={`option-${i}`} defaultValue={value} />
@@ -70,9 +88,9 @@ export default function PollMaker() {
             </Button>
           </li>
         )}
-      </ul>
+      </ul> */}
       <Button type="submit" disabled={!canSubmit}>
-        Create poll
+        Create game
       </Button>
     </>
   );

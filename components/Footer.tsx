@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <div className="text-white flex flex-col items-center space-y-2">
-      <div className="font-medium">Built with PartyKit and Next.js</div>
+      {/* <div className="font-medium">Built with PartyKit and Next.js</div>
       <div>
         <a
           className="underline"
@@ -25,8 +25,8 @@ export default function Footer() {
           target="_blank"
         >
           Tutorial
-        </a>
-      </div>
+        </a> */}
+      {/* </div> */}
     </div>
   );
 }
