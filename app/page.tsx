@@ -12,8 +12,9 @@ export default function Home() {
   async function createPoll(formData: FormData) {
     "use server";
 
-    const title = formData.get("title")?.toString() ?? "All time premiership goals";
-    const targetNumber = formData.get("targetNumber") ?? 23;
+    const title =
+      formData.get("title")?.toString() ?? "All time premiership goals";
+    const targetNumber = Number(formData.get("targetNumber")) ?? 23;
     const options: string[] = [];
 
     for (const [key, value] of formData.entries()) {
@@ -26,6 +27,8 @@ export default function Home() {
     const poll: Poll = {
       title,
       targetNumber,
+      score: [],
+      guesses: [],
       options,
     };
 

@@ -1,7 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Select, { OptionTypeBase } from "react-select";
+import Select, {
+  components,
+  ControlProps,
+  Props,
+  StylesConfig,
+} from "react-select";
 import { PARTYKIT_HOST } from "@/app/env";
 import usePartySocket from "partysocket/react";
 
@@ -23,13 +28,17 @@ export const SelectFootballers = ({ pollId }: SelectFootballersProps) => {
   const [footballers, setFootballers] = useState<Footballer[]>([]);
   const [selectedPlayers, setSelectedPlayers] = useState<Footballer[]>([]);
   const [hasGuessed, setHasGuessed] = useState(false);
-  const [selectedPlayersDetails, setSelectedPlayersDetails] = useState([]);
+  const [selectedPlayersDetails, setSelectedPlayersDetails] = useState<
+    Footballer[]
+  >([]);
 
   useEffect(() => {
     fetch("/data.json")
       .then((response) => response.json())
       .then((data) => {
-        const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
+        const sortedData = data.sort((a: any, b: any) =>
+          a.name.localeCompare(b.name)
+        );
         setFootballers(sortedData);
       });
   }, []);
@@ -64,15 +73,15 @@ export const SelectFootballers = ({ pollId }: SelectFootballersProps) => {
     sendGuess(guessedNumber);
   };
 
-  const handlePlayerSelect = (selectedOptions) => {
+  const handlePlayerSelect = (selectedOptions: any) => {
     const playersDetails = selectedOptions
-      .map((option) => {
+      .map((option: any) => {
         const player = footballers.find(
           (footballer) => footballer.name === option.value
         );
         return player ? { name: player.name, goals: player.goals } : null;
       })
-      .filter((player) => player !== null); // Filter out any null values
+      .filter((player: any) => player !== null); // Filter out any null values
 
     setSelectedPlayersDetails(playersDetails);
   };

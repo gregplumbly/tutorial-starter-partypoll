@@ -42,7 +42,7 @@ export default async function PollPage({
   return (
     <>
       <div className="flex flex-col space-y-4 items-center">
-        <ConnectionStatus />
+        <ConnectionStatus pollId={pollId} />
         <GameUpdates pollId={pollId} />
 
         <h1 className="text-2xl font-bold">{poll?.title}</h1>
